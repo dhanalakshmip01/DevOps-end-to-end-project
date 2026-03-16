@@ -1,0 +1,89 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "terraform/**"
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        type: choice
+        options: [staging, prod]
+
+jobs:
+  deploy-dev:
+    name: Deploy Dev
+    if: github.event_name == 'push'
+    runs-on: [self-hosted, linux, x64]
+
+    env:
+      TF_VAR_github_runner_url: ${{ secrets.GH_RUNNER_URL }}
+      TF_VAR_github_runner_token: ${{ secrets.GH_RUNNER_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.1"
+
+      - name: Get AWS Account ID
+        id: account
+        run: echo "id=$(aws sts get-caller-identity --query Account --output text)" >> $GITHUB_OUTPUT
+
+      - name: Terraform Init
+        working-directory: terraform/environments/dev
+        run: |
+          terraform init \
+            -backend-config="bucket=snappaste-terraform-state-${{ steps.account.outputs.id }}"
+
+      - name: Terraform Plan
+        working-directory: terraform/environments/dev
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: terraform/environments/dev
+        run: terraform apply -auto-approve tfplan
+
+  deploy-manual:
+    name: Deploy ${{ github.event.inputs.environment }}
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: [self-hosted, linux, x64]
+
+    env:
+      TF_ENV: ${{ github.event.inputs.environment }}
+      TF_VAR_github_runner_url: ${{ secrets.GH_RUNNER_URL }}
+      TF_VAR_github_runner_token: ${{ secrets.GH_RUNNER_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.11.1"
+
+      - name: Get AWS Account ID
+        id: account
+        run: echo "id=$(aws sts get-caller-identity --query Account --output text)" >> $GITHUB_OUTPUT
+
+      - name: Terraform Init
+        working-directory: terraform/environments/${{ env.TF_ENV }}
+        run: |
+          terraform init \
+            -backend-config="bucket=snappaste-terraform-state-${{ steps.account.outputs.id }}"
+
+      - name: Terraform Plan
+        working-directory: terraform/environments/${{ env.TF_ENV }}
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: terraform/environments/${{ env.TF_ENV }}
+        run: terraform apply -auto-approve tfplan
