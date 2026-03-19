@@ -34,7 +34,7 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check -recursive snappaste-infra/terraform/
         # Fails if any .tf file has wrong formatting
-        # Fix locally with: terraform fmt -recursive
+        # Fix locally with: terraform fmt -recursive snappaste-infra/terraform/
 
       - name: Terraform Validate (dev)
         working-directory: snappaste-infra/terraform/environments/dev
@@ -65,7 +65,6 @@ jobs:
     env:
       TF_ENV: ${{ github.event.inputs.environment || 'dev' }}
       TF_VAR_github_runner_url: ${{ secrets.GH_RUNNER_URL }}
-      TF_VAR_github_runner_token: ${{ secrets.GH_RUNNER_TOKEN }}
 
     steps:
       - name: Checkout
@@ -75,6 +74,19 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.11.1"
+
+      - name: Generate fresh GitHub Runner Token
+        id: runner-token
+        run: |
+          TOKEN=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/runners/registration-token \
+            --jq '.token')
+          echo "token=$TOKEN" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Token is valid 1 hour — always generated fresh, never stored stale
 
       - name: Get AWS Account ID
         id: account
@@ -88,7 +100,12 @@ jobs:
 
       - name: Terraform Plan
         working-directory: snappaste-infra/terraform/environments/${{ env.TF_ENV }}
-        run: terraform plan -no-color -out=tfplan 2>&1 | tee plan_output.txt
+        env:
+          TF_VAR_github_runner_token: ${{ steps.runner-token.outputs.token }}
+        run: |
+          set -o pipefail
+          terraform plan -no-color -out=tfplan 2>&1 | tee plan_output.txt
+        # set -o pipefail ensures pipeline fails if terraform fails, not just tee
 
       - name: Show Plan Summary
         working-directory: snappaste-infra/terraform/environments/${{ env.TF_ENV }}
@@ -103,25 +120,29 @@ jobs:
         with:
           name: tfplan-${{ env.TF_ENV }}
           path: snappaste-infra/terraform/environments/${{ env.TF_ENV }}/tfplan
-          retention-days: 1
+          retention-days: 5
+          # 5 days — enough time for approval even if you're away
 
   # ──────────────────────────────────────────────
-  # Approve + Apply
-  # Gate: GitHub Environment requires manual approval
-  # Go to Actions → running workflow → Review deployments → Approve
+  # Apply — gated by workflow_dispatch for staging/prod
+  # For dev: runs automatically after plan
+  # For staging/prod: only triggered manually via workflow_dispatch
+  #
+  # NOTE: GitHub Environment approval gate (required reviewers)
+  # requires GitHub Pro for private repos.
+  # Without Pro — use workflow_dispatch as your manual gate instead.
   # ──────────────────────────────────────────────
   apply:
     name: Apply (${{ github.event.inputs.environment || 'dev' }})
     runs-on: [self-hosted, linux, x64]
     needs: plan
     environment: ${{ github.event.inputs.environment || 'dev' }}
-    # ↑ This line is the gate — set required reviewers in
-    #   GitHub Settings → Environments → dev/staging/prod
+    # Set required reviewers in GitHub Settings → Environments
+    # (requires GitHub Pro for private repos)
 
     env:
       TF_ENV: ${{ github.event.inputs.environment || 'dev' }}
       TF_VAR_github_runner_url: ${{ secrets.GH_RUNNER_URL }}
-      TF_VAR_github_runner_token: ${{ secrets.GH_RUNNER_TOKEN }}
 
     steps:
       - name: Checkout
@@ -131,6 +152,18 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.11.1"
+
+      - name: Generate fresh GitHub Runner Token
+        id: runner-token
+        run: |
+          TOKEN=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/runners/registration-token \
+            --jq '.token')
+          echo "token=$TOKEN" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get AWS Account ID
         id: account
@@ -150,4 +183,6 @@ jobs:
 
       - name: Terraform Apply
         working-directory: snappaste-infra/terraform/environments/${{ env.TF_ENV }}
+        env:
+          TF_VAR_github_runner_token: ${{ steps.runner-token.outputs.token }}
         run: terraform apply -auto-approve tfplan
