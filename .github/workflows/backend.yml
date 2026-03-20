@@ -142,20 +142,24 @@ jobs:
       TF_ENV: ${{ github.event.inputs.environment || 'dev' }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Configure kubectl
         run: |
           aws eks update-kubeconfig \
             --name snappaste-${{ env.TF_ENV }}-eks \
             --region ${{ env.AWS_REGION }}
 
-      - name: Deploy to EKS
+      - name: Deploy via Helm
         run: |
-          kubectl set image deployment/${{ env.K8S_DEPLOYMENT }} \
-            ${{ env.K8S_CONTAINER }}=${{ needs.build-push.outputs.ecr_url }}:${{ needs.build-push.outputs.image_tag }} \
-            -n ${{ env.K8S_NAMESPACE }}
-
-      - name: Verify rollout
-        run: |
-          kubectl rollout status deployment/${{ env.K8S_DEPLOYMENT }} \
-            -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=180s
+          helm upgrade --install snappaste-backend \
+            snappaste-infra/helm/snappaste \
+            --namespace ${{ env.K8S_NAMESPACE }} \
+            --create-namespace \
+            --set backend.image.repository=${{ needs.build-push.outputs.ecr_url }} \
+            --set backend.image.tag=${{ needs.build-push.outputs.image_tag }} \
+            --set global.environment=${{ env.TF_ENV }} \
+            --values snappaste-infra/helm/snappaste/values/${{ env.TF_ENV }}.yaml \
+            --wait \
+            --timeout 3m
