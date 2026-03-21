@@ -1,0 +1,28 @@
+global:
+  environment: prod
+  namespace: snappaste
+
+image:
+  repository: ""   # set by pipeline
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 3
+
+port: 8000
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+
+env:
+  DATABASE_URL: "postgresql://snappaste:snappaste@postgres:5432/snappaste"
+
+ingress:
+  enabled: true
+  className: alb
+  host: "snappaste.com"

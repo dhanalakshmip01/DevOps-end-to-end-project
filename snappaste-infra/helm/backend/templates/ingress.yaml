@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend
+  namespace: {{ .Values.global.namespace }}
+  annotations:
+    alb.ingress.kubernetes.io/scheme: {{ index .Values.ingress.annotations "alb.ingress.kubernetes.io/scheme" | default "internet-facing" }}
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: {{ .Values.port }}
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: {{ .Values.port }}
+{{- end }}

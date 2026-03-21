@@ -1,0 +1,2955 @@
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.base[0]: Reading...
+module.runner.data.aws_caller_identity.current: Reading...
+module.jumpbox.data.aws_caller_identity.current: Reading...
+module.eks.module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.assume[0]: Reading...
+module.eks.module.eks.module.kms.data.aws_caller_identity.current[0]: Reading...
+module.jumpbox.data.aws_ami.amazon_linux: Reading...
+module.eks.module.eks.data.aws_caller_identity.current[0]: Reading...
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.base[0]: Read complete after 0s [id=1132004489]
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.assume[0]: Read complete after 0s [id=819195744]
+module.eks.module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799]
+module.eks.module.ebs_csi_pod_identity.data.aws_caller_identity.current[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_caller_identity.current[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.base[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.base[0]: Read complete after 0s [id=1132004489]
+module.runner.data.aws_ami.ubuntu: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_partition.current[0]: Reading...
+module.eks.module.ebs_csi_pod_identity.data.aws_region.current[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+module.eks.module.ebs_csi_pod_identity.data.aws_region.current[0]: Read complete after 0s [id=us-east-1]
+module.jumpbox.data.aws_region.current: Reading...
+module.jumpbox.data.aws_region.current: Read complete after 0s [id=us-east-1]
+module.eks.module.ebs_csi_pod_identity.data.aws_partition.current[0]: Reading...
+module.eks.module.eks.module.eks_managed_node_group["general"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+module.eks.module.ebs_csi_pod_identity.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+module.eks.module.eks.module.kms.data.aws_partition.current[0]: Reading...
+module.eks.module.eks.module.eks_managed_node_group["general"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296]
+module.eks.module.eks.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.assume[0]: Reading...
+module.eks.module.eks.data.aws_partition.current[0]: Reading...
+module.eks.module.eks.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.assume[0]: Read complete after 0s [id=819195744]
+module.eks.module.lb_controller_pod_identity.data.aws_region.current[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_region.current[0]: Read complete after 0s [id=us-east-1]
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.ebs_csi[0]: Reading...
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.lb_controller[0]: Reading...
+module.eks.module.ebs_csi_pod_identity.data.aws_iam_policy_document.ebs_csi[0]: Read complete after 0s [id=3814610845]
+module.eks.module.lb_controller_pod_identity.data.aws_iam_policy_document.lb_controller[0]: Read complete after 0s [id=4218241835]
+module.eks.module.eks.module.kms.data.aws_caller_identity.current[0]: Read complete after 0s [id=884337374668]
+module.eks.module.eks.data.aws_caller_identity.current[0]: Read complete after 0s [id=884337374668]
+module.eks.module.eks.data.aws_iam_session_context.current[0]: Reading...
+module.eks.module.eks.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:iam::884337374668:user/siva]
+module.eks.module.eks.module.eks_managed_node_group["general"].data.aws_ssm_parameter.ami[0]: Reading...
+module.runner.data.aws_caller_identity.current: Read complete after 0s [id=884337374668]
+module.jumpbox.data.aws_caller_identity.current: Read complete after 1s [id=884337374668]
+module.eks.module.ebs_csi_pod_identity.data.aws_caller_identity.current[0]: Read complete after 1s [id=884337374668]
+module.eks.module.lb_controller_pod_identity.data.aws_caller_identity.current[0]: Read complete after 1s [id=884337374668]
+module.runner.data.aws_ami.ubuntu: Read complete after 1s [id=ami-0462ececcfe0a450f]
+module.eks.module.eks.module.eks_managed_node_group["general"].data.aws_ssm_parameter.ami[0]: Read complete after 1s [id=/aws/service/eks/optimized-ami/1.34/amazon-linux-2023/x86_64/standard/recommended/release_version]
+module.jumpbox.data.aws_ami.amazon_linux: Read complete after 1s [id=ami-02dfbd4ff395f2a1b]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.ecr.aws_ecr_lifecycle_policy.cleanup["backend"] will be created
+  + resource "aws_ecr_lifecycle_policy" "cleanup" {
+      + id          = (known after apply)
+      + policy      = jsonencode(
+            {
+              + rules = [
+                  + {
+                      + action       = {
+                          + type = "expire"
+                        }
+                      + description  = "Remove untagged images after 7 days"
+                      + rulePriority = 1
+                      + selection    = {
+                          + countNumber = 7
+                          + countType   = "sinceImagePushed"
+                          + countUnit   = "days"
+                          + tagStatus   = "untagged"
+                        }
+                    },
+                  + {
+                      + action       = {
+                          + type = "expire"
+                        }
+                      + description  = "Keep only the last 10 tagged images"
+                      + rulePriority = 2
+                      + selection    = {
+                          + countNumber   = 10
+                          + countType     = "imageCountMoreThan"
+                          + tagPrefixList = [
+                              + "v",
+                              + "sha-",
+                            ]
+                          + tagStatus     = "tagged"
+                        }
+                    },
+                ]
+            }
+        )
+      + region      = "us-east-1"
+      + registry_id = (known after apply)
+      + repository  = "snappaste-backend"
+    }
+
+  # module.ecr.aws_ecr_lifecycle_policy.cleanup["frontend"] will be created
+  + resource "aws_ecr_lifecycle_policy" "cleanup" {
+      + id          = (known after apply)
+      + policy      = jsonencode(
+            {
+              + rules = [
+                  + {
+                      + action       = {
+                          + type = "expire"
+                        }
+                      + description  = "Remove untagged images after 7 days"
+                      + rulePriority = 1
+                      + selection    = {
+                          + countNumber = 7
+                          + countType   = "sinceImagePushed"
+                          + countUnit   = "days"
+                          + tagStatus   = "untagged"
+                        }
+                    },
+                  + {
+                      + action       = {
+                          + type = "expire"
+                        }
+                      + description  = "Keep only the last 10 tagged images"
+                      + rulePriority = 2
+                      + selection    = {
+                          + countNumber   = 10
+                          + countType     = "imageCountMoreThan"
+                          + tagPrefixList = [
+                              + "v",
+                              + "sha-",
+                            ]
+                          + tagStatus     = "tagged"
+                        }
+                    },
+                ]
+            }
+        )
+      + region      = "us-east-1"
+      + registry_id = (known after apply)
+      + repository  = "snappaste-frontend"
+    }
+
+  # module.ecr.aws_ecr_repository.repositories["backend"] will be created
+  + resource "aws_ecr_repository" "repositories" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "IMMUTABLE"
+      + name                 = "snappaste-backend"
+      + region               = "us-east-1"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+          + "Repository"  = "backend"
+        }
+      + tags_all             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+          + "Repository"  = "backend"
+        }
+
+      + encryption_configuration {
+          + encryption_type = "KMS"
+          + kms_key         = (known after apply)
+        }
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # module.ecr.aws_ecr_repository.repositories["frontend"] will be created
+  + resource "aws_ecr_repository" "repositories" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "IMMUTABLE"
+      + name                 = "snappaste-frontend"
+      + region               = "us-east-1"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+          + "Repository"  = "frontend"
+        }
+      + tags_all             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+          + "Repository"  = "frontend"
+        }
+
+      + encryption_configuration {
+          + encryption_type = "KMS"
+          + kms_key         = (known after apply)
+        }
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # module.eks.aws_security_group_rule.jumpbox_to_eks will be created
+  + resource "aws_security_group_rule" "jumpbox_to_eks" {
+      + description              = "Allow jumpbox to reach EKS API server"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.runner_to_eks will be created
+  + resource "aws_security_group_rule" "runner_to_eks" {
+      + description              = "Allow GitHub Actions runner to reach EKS API server for kubectl deploys"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.jumpbox.aws_iam_instance_profile.jumpbox will be created
+  + resource "aws_iam_instance_profile" "jumpbox" {
+      + arn         = (known after apply)
+      + create_date = (known after apply)
+      + id          = (known after apply)
+      + name        = "snappaste-dev-jumpbox-profile"
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + role        = "snappaste-dev-jumpbox-role"
+      + tags_all    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id   = (known after apply)
+    }
+
+  # module.jumpbox.aws_iam_role.jumpbox will be created
+  + resource "aws_iam_role" "jumpbox" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "snappaste-dev-jumpbox-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags                  = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.jumpbox.aws_iam_role_policy.jumpbox_eks will be created
+  + resource "aws_iam_role_policy" "jumpbox_eks" {
+      + id          = (known after apply)
+      + name        = "snappaste-dev-jumpbox-eks"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "eks:DescribeCluster",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:eks:us-east-1:884337374668:cluster/snappaste-dev-eks"
+                    },
+                  + {
+                      + Action   = [
+                          + "eks:ListClusters",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = (known after apply)
+    }
+
+  # module.jumpbox.aws_iam_role_policy_attachment.jumpbox_ssm will be created
+  + resource "aws_iam_role_policy_attachment" "jumpbox_ssm" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      + role       = "snappaste-dev-jumpbox-role"
+    }
+
+  # module.jumpbox.aws_instance.jumpbox will be created
+  + resource "aws_instance" "jumpbox" {
+      + ami                                  = "ami-02dfbd4ff395f2a1b"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = false
+      + availability_zone                    = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      + force_destroy                        = false
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = "snappaste-dev-jumpbox-profile"
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t3.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = (known after apply)
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_group_id                   = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + region                               = "us-east-1"
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-jumpbox"
+          + "Project"     = "snappaste"
+          + "Role"        = "jumpbox"
+        }
+      + tags_all                             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-jumpbox"
+          + "Project"     = "snappaste"
+          + "Role"        = "jumpbox"
+        }
+      + tenancy                              = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification (known after apply)
+
+      + cpu_options (known after apply)
+
+      + ebs_block_device (known after apply)
+
+      + enclave_options (known after apply)
+
+      + ephemeral_block_device (known after apply)
+
+      + instance_market_options (known after apply)
+
+      + maintenance_options (known after apply)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = (known after apply)
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = (known after apply)
+        }
+
+      + network_interface (known after apply)
+
+      + primary_network_interface (known after apply)
+
+      + private_dns_name_options (known after apply)
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = true
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + tags_all              = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 10
+          + volume_type           = "gp3"
+        }
+
+      + secondary_network_interface (known after apply)
+    }
+
+  # module.jumpbox.aws_security_group.jumpbox will be created
+  + resource "aws_security_group" "jumpbox" {
+      + arn                    = (known after apply)
+      + description            = "Security group for jumpbox — SSM only, no SSH"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Allow outbound HTTPS for SSM"
+              + from_port        = 443
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 443
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "snappaste-dev-jumpbox-"
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-jumpbox-sg"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-jumpbox-sg"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.runner.aws_iam_instance_profile.runner will be created
+  + resource "aws_iam_instance_profile" "runner" {
+      + arn         = (known after apply)
+      + create_date = (known after apply)
+      + id          = (known after apply)
+      + name        = "snappaste-dev-gh-runner-profile"
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + role        = "snappaste-dev-gh-runner-role"
+      + tags_all    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id   = (known after apply)
+    }
+
+  # module.runner.aws_iam_role.runner will be created
+  + resource "aws_iam_role" "runner" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "snappaste-dev-gh-runner-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags                  = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.runner.aws_iam_role_policy.ecr_access will be created
+  + resource "aws_iam_role_policy" "ecr_access" {
+      + id          = (known after apply)
+      + name        = "snappaste-dev-gh-runner-ecr"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "ecr:GetAuthorizationToken",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action   = [
+                          + "ecr:BatchCheckLayerAvailability",
+                          + "ecr:GetDownloadUrlForLayer",
+                          + "ecr:BatchGetImage",
+                          + "ecr:PutImage",
+                          + "ecr:InitiateLayerUpload",
+                          + "ecr:UploadLayerPart",
+                          + "ecr:CompleteLayerUpload",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:ecr:us-east-1:884337374668:repository/snappaste-frontend",
+                          + "arn:aws:ecr:us-east-1:884337374668:repository/snappaste-backend",
+                        ]
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = (known after apply)
+    }
+
+  # module.runner.aws_iam_role_policy.eks_access will be created
+  + resource "aws_iam_role_policy" "eks_access" {
+      + id          = (known after apply)
+      + name        = "snappaste-dev-gh-runner-eks"
+      + name_prefix = (known after apply)
+      + policy      = (known after apply)
+      + role        = (known after apply)
+    }
+
+  # module.runner.aws_iam_role_policy.s3_access will be created
+  + resource "aws_iam_role_policy" "s3_access" {
+      + id          = (known after apply)
+      + name        = "snappaste-dev-gh-runner-s3"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "s3:ListBucket",
+                          + "s3:GetBucketVersioning",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:s3:::snappaste-terraform-state-884337374668"
+                    },
+                  + {
+                      + Action   = [
+                          + "s3:GetObject",
+                          + "s3:PutObject",
+                          + "s3:DeleteObject",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:s3:::snappaste-terraform-state-884337374668/*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = (known after apply)
+    }
+
+  # module.runner.aws_iam_role_policy.ssm_access will be created
+  + resource "aws_iam_role_policy" "ssm_access" {
+      + id          = (known after apply)
+      + name        = "snappaste-dev-gh-runner-ssm"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "ssm:GetParameter",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:ssm:us-east-1:884337374668:parameter/snappaste/dev/*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = (known after apply)
+    }
+
+  # module.runner.aws_iam_role_policy_attachment.ssm will be created
+  + resource "aws_iam_role_policy_attachment" "ssm" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      + role       = "snappaste-dev-gh-runner-role"
+    }
+
+  # module.runner.aws_instance.runner will be created
+  + resource "aws_instance" "runner" {
+      + ami                                  = "ami-0462ececcfe0a450f"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      + force_destroy                        = false
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = "snappaste-dev-gh-runner-profile"
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t3.medium"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = (known after apply)
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_group_id                   = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + region                               = "us-east-1"
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-gh-runner"
+          + "Project"     = "snappaste"
+          + "Role"        = "github-actions-runner"
+        }
+      + tags_all                             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-gh-runner"
+          + "Project"     = "snappaste"
+          + "Role"        = "github-actions-runner"
+        }
+      + tenancy                              = (known after apply)
+      + user_data_base64                     = "IyEvYmluL2Jhc2gKc2V0IC1ldW8gcGlwZWZhaWwKCiMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiMgR2l0SHViIEFjdGlvbnMgU2VsZi1Ib3N0ZWQgUnVubmVyIFNldHVwIFNjcmlwdAojIEluc3RhbGxzOiBEb2NrZXIsIGt1YmVjdGwsIEhlbG0sIFRlcnJhZm9ybSwgVHJpdnksIEFXUyBDTEkKIyBUb2tlbiBmZXRjaGVkIGZyb20gU1NNIGF0IGJvb3Qg4oCUIG5ldmVyIGhhcmRjb2RlZAojIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKZXhwb3J0IERFQklBTl9GUk9OVEVORD1ub25pbnRlcmFjdGl2ZQoKIyBTeXN0ZW0gdXBkYXRlcwphcHQtZ2V0IHVwZGF0ZSAteQphcHQtZ2V0IHVwZ3JhZGUgLXkKCiMg4pSA4pSAIERvY2tlciDilIDilIAKYXB0LWdldCBpbnN0YWxsIC15IGNhLWNlcnRpZmljYXRlcyBjdXJsIGdudXBnIHVuemlwIGpxIGdpdAppbnN0YWxsIC1tIDA3NTUgLWQgL2V0Yy9hcHQva2V5cmluZ3MKY3VybCAtZnNTTCBodHRwczovL2Rvd25sb2FkLmRvY2tlci5jb20vbGludXgvdWJ1bnR1L2dwZyB8IGdwZyAtLWRlYXJtb3IgLW8gL2V0Yy9hcHQva2V5cmluZ3MvZG9ja2VyLmdwZwpjaG1vZCBhK3IgL2V0Yy9hcHQva2V5cmluZ3MvZG9ja2VyLmdwZwplY2hvICJkZWIgW2FyY2g9JChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKSBzaWduZWQtYnk9L2V0Yy9hcHQva2V5cmluZ3MvZG9ja2VyLmdwZ10gaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dSAkKC4gL2V0Yy9vcy1yZWxlYXNlICYmIGVjaG8gIiRWRVJTSU9OX0NPREVOQU1FIikgc3RhYmxlIiB8IHRlZSAvZXRjL2FwdC9zb3VyY2VzLmxpc3QuZC9kb2NrZXIubGlzdCA+IC9kZXYvbnVsbAphcHQtZ2V0IHVwZGF0ZSAteQphcHQtZ2V0IGluc3RhbGwgLXkgZG9ja2VyLWNlIGRvY2tlci1jZS1jbGkgY29udGFpbmVyZC5pbyBkb2NrZXItYnVpbGR4LXBsdWdpbgoKIyDilIDilIAga3ViZWN0bCDilIDilIAKY3VybCAtZnNTTCBodHRwczovL3BrZ3MuazhzLmlvL2NvcmU6L3N0YWJsZTovdjEuMzMvZGViL1JlbGVhc2Uua2V5IHwgZ3BnIC0tZGVhcm1vciAtbyAvZXRjL2FwdC9rZXlyaW5ncy9rdWJlcm5ldGVzLWFwdC1rZXlyaW5nLmdwZwplY2hvICJkZWIgW3NpZ25lZC1ieT0vZXRjL2FwdC9rZXlyaW5ncy9rdWJlcm5ldGVzLWFwdC1rZXlyaW5nLmdwZ10gaHR0cHM6Ly9wa2dzLms4cy5pby9jb3JlOi9zdGFibGU6L3YxLjMzL2RlYi8gLyIgfCB0ZWUgL2V0Yy9hcHQvc291cmNlcy5saXN0LmQva3ViZXJuZXRlcy5saXN0CmFwdC1nZXQgdXBkYXRlIC15CmFwdC1nZXQgaW5zdGFsbCAteSBrdWJlY3RsCgojIOKUgOKUgCBIZWxtIOKUgOKUgApjdXJsIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9oZWxtL2hlbG0vbWFpbi9zY3JpcHRzL2dldC1oZWxtLTMgfCBiYXNoCgojIOKUgOKUgCBUZXJyYWZvcm0g4pSA4pSACmFwdC1nZXQgaW5zdGFsbCAteSBzb2Z0d2FyZS1wcm9wZXJ0aWVzLWNvbW1vbgpjdXJsIC1mc1NMIGh0dHBzOi8vYXB0LnJlbGVhc2VzLmhhc2hpY29ycC5jb20vZ3BnIHwgZ3BnIC0tZGVhcm1vciAtbyAvdXNyL3NoYXJlL2tleXJpbmdzL2hhc2hpY29ycC1hcmNoaXZlLWtleXJpbmcuZ3BnCmVjaG8gImRlYiBbc2lnbmVkLWJ5PS91c3Ivc2hhcmUva2V5cmluZ3MvaGFzaGljb3JwLWFyY2hpdmUta2V5cmluZy5ncGddIGh0dHBzOi8vYXB0LnJlbGVhc2VzLmhhc2hpY29ycC5jb20gJChsc2JfcmVsZWFzZSAtY3MpIG1haW4iIHwgdGVlIC9ldGMvYXB0L3NvdXJjZXMubGlzdC5kL2hhc2hpY29ycC5saXN0CmFwdC1nZXQgdXBkYXRlIC15CmFwdC1nZXQgaW5zdGFsbCAteSB0ZXJyYWZvcm0KCiMg4pSA4pSAIFRyaXZ5IOKUgOKUgApjdXJsIC1zZkwgaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2FxdWFzZWN1cml0eS90cml2eS9tYWluL2NvbnRyaWIvaW5zdGFsbC5zaCB8IHNoIC1zIC0tIC1iIC91c3IvbG9jYWwvYmluCgojIOKUgOKUgCBBV1MgQ0xJIHYyIOKUgOKUgApjdXJsICJodHRwczovL2F3c2NsaS5hbWF6b25hd3MuY29tL2F3c2NsaS1leGUtbGludXgteDg2XzY0LnppcCIgLW8gIi90bXAvYXdzY2xpdjIuemlwIgp1bnppcCAtcSAvdG1wL2F3c2NsaXYyLnppcCAtZCAvdG1wCi90bXAvYXdzL2luc3RhbGwKcm0gLXJmIC90bXAvYXdzIC90bXAvYXdzY2xpdjIuemlwCgojIOKUgOKUgCBDcmVhdGUgcnVubmVyIHVzZXIg4pSA4pSACnVzZXJhZGQgLW0gLXMgL2Jpbi9iYXNoIHJ1bm5lcgp1c2VybW9kIC1hRyBkb2NrZXIgcnVubmVyCgojIOKUgOKUgCBGZXRjaCBHaXRIdWIgUnVubmVyIHRva2VuIGZyb20gU1NNIGF0IGJvb3Qg4pSA4pSACiMgVG9rZW4gaXMgbmV2ZXIgaGFyZGNvZGVkIOKAlCBmZXRjaGVkIHNlY3VyZWx5IGF0IHJ1bnRpbWUKZWNobyAiRmV0Y2hpbmcgR2l0SHViIHJ1bm5lciB0b2tlbiBmcm9tIFNTTS4uLiIKUlVOTkVSX1RPS0VOPSQoYXdzIHNzbSBnZXQtcGFyYW1ldGVyIFwKICAtLW5hbWUgIi9zbmFwcGFzdGUvZGV2L2dpdGh1Yi1ydW5uZXItdG9rZW4iIFwKICAtLXdpdGgtZGVjcnlwdGlvbiBcCiAgLS1yZWdpb24gInVzLWVhc3QtMSIgXAogIC0tcXVlcnkgUGFyYW1ldGVyLlZhbHVlIFwKICAtLW91dHB1dCB0ZXh0KQoKaWYgWyAteiAiJFJVTk5FUl9UT0tFTiIgXTsgdGhlbgogIGVjaG8gIkVSUk9SOiBGYWlsZWQgdG8gZmV0Y2ggcnVubmVyIHRva2VuIGZyb20gU1NNLiBBYm9ydGluZy4iCiAgZXhpdCAxCmZpCgojIOKUgOKUgCBJbnN0YWxsIEdpdEh1YiBBY3Rpb25zIFJ1bm5lciDilIDilIAKUlVOTkVSX1ZFUlNJT049JChjdXJsIC1zIGh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3MvYWN0aW9ucy9ydW5uZXIvcmVsZWFzZXMvbGF0ZXN0IHwganEgLXIgJy50YWdfbmFtZScgfCBzZWQgJ3Mvdi8vJykKbWtkaXIgLXAgL2hvbWUvcnVubmVyL2FjdGlvbnMtcnVubmVyCmNkIC9ob21lL3J1bm5lci9hY3Rpb25zLXJ1bm5lcgpjdXJsIC1vIGFjdGlvbnMtcnVubmVyLWxpbnV4LXg2NC50YXIuZ3ogLUwgImh0dHBzOi8vZ2l0aHViLmNvbS9hY3Rpb25zL3J1bm5lci9yZWxlYXNlcy9kb3dubG9hZC92JHtSVU5ORVJfVkVSU0lPTn0vYWN0aW9ucy1ydW5uZXItbGludXgteDY0LSR7UlVOTkVSX1ZFUlNJT059LnRhci5neiIKdGFyIHh6ZiBhY3Rpb25zLXJ1bm5lci1saW51eC14NjQudGFyLmd6CnJtIGFjdGlvbnMtcnVubmVyLWxpbnV4LXg2NC50YXIuZ3oKY2hvd24gLVIgcnVubmVyOnJ1bm5lciAvaG9tZS9ydW5uZXIvYWN0aW9ucy1ydW5uZXIKCiMg4pSA4pSAIENvbmZpZ3VyZSBydW5uZXIg4pSA4pSACnN1IC0gcnVubmVyIC1jICIKICBjZCAvaG9tZS9ydW5uZXIvYWN0aW9ucy1ydW5uZXIgJiYgXAogIC4vY29uZmlnLnNoIFwKICAgIC0tdXJsIGh0dHBzOi8vZ2l0aHViLmNvbS9zaXZhOTgwMC9EZXZPcHMtZW5kLXRvLWVuZCBcCiAgICAtLXRva2VuICRSVU5ORVJfVE9LRU4gXAogICAgLS1uYW1lIHNuYXBwYXN0ZS1ydW5uZXIgXAogICAgLS1sYWJlbHMgc2VsZi1ob3N0ZWQsbGludXgseDY0IFwKICAgIC0tdW5hdHRlbmRlZCBcCiAgICAtLXJlcGxhY2UKIgoKIyDilIDilIAgSW5zdGFsbCBhbmQgc3RhcnQgYXMgc2VydmljZSDilIDilIAKY2QgL2hvbWUvcnVubmVyL2FjdGlvbnMtcnVubmVyCi4vc3ZjLnNoIGluc3RhbGwgcnVubmVyCi4vc3ZjLnNoIHN0YXJ0CgojIOKUgOKUgCBDbGVhciB0b2tlbiBmcm9tIG1lbW9yeSDigJQgbm8gbG9uZ2VyIG5lZWRlZCDilIDilIAKdW5zZXQgUlVOTkVSX1RPS0VOCgplY2hvICJHaXRIdWIgQWN0aW9ucyBzZWxmLWhvc3RlZCBydW5uZXIgc2V0dXAgY29tcGxldGUhIg=="
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification (known after apply)
+
+      + cpu_options (known after apply)
+
+      + ebs_block_device (known after apply)
+
+      + enclave_options (known after apply)
+
+      + ephemeral_block_device (known after apply)
+
+      + instance_market_options (known after apply)
+
+      + maintenance_options (known after apply)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = (known after apply)
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = (known after apply)
+        }
+
+      + network_interface (known after apply)
+
+      + primary_network_interface (known after apply)
+
+      + private_dns_name_options (known after apply)
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = true
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + tags_all              = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 30
+          + volume_type           = "gp3"
+        }
+
+      + secondary_network_interface (known after apply)
+    }
+
+  # module.runner.aws_security_group.runner will be created
+  + resource "aws_security_group" "runner" {
+      + arn                    = (known after apply)
+      + description            = "Security group for GitHub Actions self-hosted runner - SSM only"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Allow all outbound - GitHub API, ECR, Docker Hub"
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "snappaste-dev-gh-runner-"
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-gh-runner-sg"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-gh-runner-sg"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.runner.aws_ssm_parameter.runner_token will be created
+  + resource "aws_ssm_parameter" "runner_token" {
+      + arn            = (known after apply)
+      + data_type      = (known after apply)
+      + description    = "GitHub Actions runner registration token"
+      + has_value_wo   = (known after apply)
+      + id             = (known after apply)
+      + insecure_value = (known after apply)
+      + key_id         = (known after apply)
+      + name           = "/snappaste/dev/github-runner-token"
+      + region         = "us-east-1"
+      + tags           = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all       = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tier           = (known after apply)
+      + type           = "SecureString"
+      + value          = (sensitive value)
+      + value_wo       = (write-only attribute)
+      + version        = (known after apply)
+    }
+
+  # module.eks.module.ebs_csi_pod_identity.aws_eks_pod_identity_association.this["this"] will be created
+  + resource "aws_eks_pod_identity_association" "this" {
+      + association_arn      = (known after apply)
+      + association_id       = (known after apply)
+      + cluster_name         = "snappaste-dev-eks"
+      + disable_session_tags = false
+      + external_id          = (known after apply)
+      + id                   = (known after apply)
+      + namespace            = "kube-system"
+      + region               = "us-east-1"
+      + role_arn             = (known after apply)
+      + service_account      = "ebs-csi-controller-sa"
+      + tags                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.ebs_csi_pod_identity.aws_iam_policy.ebs_csi[0] will be created
+  + resource "aws_iam_policy" "ebs_csi" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + description      = "Permissions to manage EBS volumes via the container storage interface (CSI) driver"
+      + id               = (known after apply)
+      + name             = (known after apply)
+      + name_prefix      = "AmazonEKS_EBS_CSI-"
+      + path             = "/"
+      + policy           = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "ec2:ModifyVolume",
+                          + "ec2:EnableFastSnapshotRestores",
+                          + "ec2:DetachVolume",
+                          + "ec2:DescribeVolumesModifications",
+                          + "ec2:DescribeVolumes",
+                          + "ec2:DescribeTags",
+                          + "ec2:DescribeSnapshots",
+                          + "ec2:DescribeInstances",
+                          + "ec2:DescribeAvailabilityZones",
+                          + "ec2:CreateSnapshot",
+                          + "ec2:AttachVolume",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action   = "ec2:CopyVolumes"
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:ec2:*:*:volume/vol-*"
+                    },
+                  + {
+                      + Action    = "ec2:CreateTags"
+                      + Condition = {
+                          + StringEquals = {
+                              + "ec2:CreateAction" = [
+                                  + "CreateVolume",
+                                  + "CreateSnapshot",
+                                  + "CopyVolumes",
+                                ]
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = [
+                          + "arn:aws:ec2:*:*:volume/*",
+                          + "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  + {
+                      + Action   = "ec2:DeleteTags"
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:ec2:*:*:volume/*",
+                          + "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  + {
+                      + Action    = [
+                          + "ec2:CreateVolume",
+                          + "ec2:CopyVolumes",
+                        ]
+                      + Condition = {
+                          + StringLike = {
+                              + "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  + {
+                      + Action    = [
+                          + "ec2:CreateVolume",
+                          + "ec2:CopyVolumes",
+                        ]
+                      + Condition = {
+                          + StringLike = {
+                              + "aws:RequestTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  + {
+                      + Action   = "ec2:CreateVolume"
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/kubernetes.io/created-for/pvc/name" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = "ec2:DeleteSnapshot"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = "ec2:DeleteSnapshot"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id        = (known after apply)
+      + tags             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all         = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.ebs_csi_pod_identity.aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = [
+                          + "sts:TagSession",
+                          + "sts:AssumeRole",
+                        ]
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "pods.eks.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "snappaste-dev-ebs-csi-"
+      + path                  = "/"
+      + tags                  = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.eks.module.ebs_csi_pod_identity.aws_iam_role_policy_attachment.ebs_csi[0] will be created
+  + resource "aws_iam_role_policy_attachment" "ebs_csi" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.data.aws_eks_addon_version.this["aws-ebs-csi-driver"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "aws-ebs-csi-driver"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.34"
+      + most_recent        = true
+      + region             = (known after apply)
+      + version            = (known after apply)
+    }
+
+  # module.eks.module.eks.data.aws_eks_addon_version.this["coredns"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "coredns"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.34"
+      + most_recent        = true
+      + region             = (known after apply)
+      + version            = (known after apply)
+    }
+
+  # module.eks.module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "eks-pod-identity-agent"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.34"
+      + most_recent        = true
+      + region             = (known after apply)
+      + version            = (known after apply)
+    }
+
+  # module.eks.module.eks.data.aws_eks_addon_version.this["kube-proxy"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "kube-proxy"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.34"
+      + most_recent        = true
+      + region             = (known after apply)
+      + version            = (known after apply)
+    }
+
+  # module.eks.module.eks.data.aws_eks_addon_version.this["vpc-cni"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "vpc-cni"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.34"
+      + most_recent        = true
+      + region             = (known after apply)
+      + version            = (known after apply)
+    }
+
+  # module.eks.module.eks.data.tls_certificate.this[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "tls_certificate" "this" {
+      + certificates = (known after apply)
+      + id           = (known after apply)
+      + url          = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_cloudwatch_log_group.this[0] will be created
+  + resource "aws_cloudwatch_log_group" "this" {
+      + arn                         = (known after apply)
+      + deletion_protection_enabled = (known after apply)
+      + id                          = (known after apply)
+      + log_group_class             = (known after apply)
+      + name                        = "/aws/eks/snappaste-dev-eks/cluster"
+      + name_prefix                 = (known after apply)
+      + region                      = "us-east-1"
+      + retention_in_days           = 90
+      + skip_destroy                = false
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "/aws/eks/snappaste-dev-eks/cluster"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "/aws/eks/snappaste-dev-eks/cluster"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Environment"] will be created
+  + resource "aws_ec2_tag" "cluster_primary_security_group" {
+      + id          = (known after apply)
+      + key         = "Environment"
+      + region      = "us-east-1"
+      + resource_id = (known after apply)
+      + value       = "dev"
+    }
+
+  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["ManagedBy"] will be created
+  + resource "aws_ec2_tag" "cluster_primary_security_group" {
+      + id          = (known after apply)
+      + key         = "ManagedBy"
+      + region      = "us-east-1"
+      + resource_id = (known after apply)
+      + value       = "terraform"
+    }
+
+  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Project"] will be created
+  + resource "aws_ec2_tag" "cluster_primary_security_group" {
+      + id          = (known after apply)
+      + key         = "Project"
+      + region      = "us-east-1"
+      + resource_id = (known after apply)
+      + value       = "snappaste"
+    }
+
+  # module.eks.module.eks.aws_eks_access_entry.this["cluster_creator"] will be created
+  + resource "aws_eks_access_entry" "this" {
+      + access_entry_arn  = (known after apply)
+      + cluster_name      = (known after apply)
+      + created_at        = (known after apply)
+      + id                = (known after apply)
+      + kubernetes_groups = (known after apply)
+      + modified_at       = (known after apply)
+      + principal_arn     = "arn:aws:iam::884337374668:user/siva"
+      + region            = "us-east-1"
+      + tags              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all          = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + type              = "STANDARD"
+      + user_name         = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"] will be created
+  + resource "aws_eks_access_policy_association" "this" {
+      + associated_at = (known after apply)
+      + cluster_name  = (known after apply)
+      + id            = (known after apply)
+      + modified_at   = (known after apply)
+      + policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      + principal_arn = "arn:aws:iam::884337374668:user/siva"
+      + region        = "us-east-1"
+
+      + access_scope {
+          + type = "cluster"
+        }
+    }
+
+  # module.eks.module.eks.aws_eks_addon.before_compute["eks-pod-identity-agent"] will be created
+  + resource "aws_eks_addon" "before_compute" {
+      + addon_name                  = "eks-pod-identity-agent"
+      + addon_version               = (known after apply)
+      + arn                         = (known after apply)
+      + cluster_name                = (known after apply)
+      + configuration_values        = (known after apply)
+      + created_at                  = (known after apply)
+      + id                          = (known after apply)
+      + modified_at                 = (known after apply)
+      + preserve                    = true
+      + region                      = "us-east-1"
+      + resolve_conflicts_on_create = "NONE"
+      + resolve_conflicts_on_update = "OVERWRITE"
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.module.eks.aws_eks_addon.before_compute["vpc-cni"] will be created
+  + resource "aws_eks_addon" "before_compute" {
+      + addon_name                  = "vpc-cni"
+      + addon_version               = (known after apply)
+      + arn                         = (known after apply)
+      + cluster_name                = (known after apply)
+      + configuration_values        = (known after apply)
+      + created_at                  = (known after apply)
+      + id                          = (known after apply)
+      + modified_at                 = (known after apply)
+      + preserve                    = true
+      + region                      = "us-east-1"
+      + resolve_conflicts_on_create = "NONE"
+      + resolve_conflicts_on_update = "OVERWRITE"
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.module.eks.aws_eks_addon.this["aws-ebs-csi-driver"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name                  = "aws-ebs-csi-driver"
+      + addon_version               = (known after apply)
+      + arn                         = (known after apply)
+      + cluster_name                = (known after apply)
+      + configuration_values        = (known after apply)
+      + created_at                  = (known after apply)
+      + id                          = (known after apply)
+      + modified_at                 = (known after apply)
+      + preserve                    = true
+      + region                      = "us-east-1"
+      + resolve_conflicts_on_create = "NONE"
+      + resolve_conflicts_on_update = "OVERWRITE"
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.module.eks.aws_eks_addon.this["coredns"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name                  = "coredns"
+      + addon_version               = (known after apply)
+      + arn                         = (known after apply)
+      + cluster_name                = (known after apply)
+      + configuration_values        = (known after apply)
+      + created_at                  = (known after apply)
+      + id                          = (known after apply)
+      + modified_at                 = (known after apply)
+      + preserve                    = true
+      + region                      = "us-east-1"
+      + resolve_conflicts_on_create = "NONE"
+      + resolve_conflicts_on_update = "OVERWRITE"
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.module.eks.aws_eks_addon.this["kube-proxy"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name                  = "kube-proxy"
+      + addon_version               = (known after apply)
+      + arn                         = (known after apply)
+      + cluster_name                = (known after apply)
+      + configuration_values        = (known after apply)
+      + created_at                  = (known after apply)
+      + id                          = (known after apply)
+      + modified_at                 = (known after apply)
+      + preserve                    = true
+      + region                      = "us-east-1"
+      + resolve_conflicts_on_create = "NONE"
+      + resolve_conflicts_on_update = "OVERWRITE"
+      + tags                        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                    = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.module.eks.aws_eks_cluster.this[0] will be created
+  + resource "aws_eks_cluster" "this" {
+      + arn                           = (known after apply)
+      + bootstrap_self_managed_addons = false
+      + certificate_authority         = (known after apply)
+      + cluster_id                    = (known after apply)
+      + created_at                    = (known after apply)
+      + deletion_protection           = (known after apply)
+      + enabled_cluster_log_types     = [
+          + "api",
+          + "audit",
+          + "authenticator",
+        ]
+      + endpoint                      = (known after apply)
+      + id                            = (known after apply)
+      + identity                      = (known after apply)
+      + name                          = "snappaste-dev-eks"
+      + platform_version              = (known after apply)
+      + region                        = "us-east-1"
+      + role_arn                      = (known after apply)
+      + status                        = (known after apply)
+      + tags                          = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                      = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + version                       = "1.34"
+
+      + access_config {
+          + authentication_mode                         = "API_AND_CONFIG_MAP"
+          + bootstrap_cluster_creator_admin_permissions = false
+        }
+
+      + compute_config (known after apply)
+
+      + control_plane_scaling_config (known after apply)
+
+      + encryption_config {
+          + resources = [
+              + "secrets",
+            ]
+
+          + provider {
+              + key_arn = (known after apply)
+            }
+        }
+
+      + kubernetes_network_config {
+          + ip_family         = "ipv4"
+          + service_ipv4_cidr = (known after apply)
+          + service_ipv6_cidr = (known after apply)
+
+          + elastic_load_balancing (known after apply)
+        }
+
+      + storage_config (known after apply)
+
+      + upgrade_policy (known after apply)
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = true
+          + endpoint_public_access    = false
+          + public_access_cidrs       = [
+              + "0.0.0.0/0",
+            ]
+          + security_group_ids        = (known after apply)
+          + subnet_ids                = (known after apply)
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # module.eks.module.eks.aws_iam_openid_connect_provider.oidc_provider[0] will be created
+  + resource "aws_iam_openid_connect_provider" "oidc_provider" {
+      + arn             = (known after apply)
+      + client_id_list  = [
+          + "sts.amazonaws.com",
+        ]
+      + id              = (known after apply)
+      + tags            = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-eks-eks-irsa"
+          + "Project"     = "snappaste"
+        }
+      + tags_all        = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-eks-eks-irsa"
+          + "Project"     = "snappaste"
+        }
+      + thumbprint_list = (known after apply)
+      + url             = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_iam_policy.cluster_encryption[0] will be created
+  + resource "aws_iam_policy" "cluster_encryption" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + description      = "Cluster encryption policy to allow cluster role to utilize CMK provided"
+      + id               = (known after apply)
+      + name             = (known after apply)
+      + name_prefix      = "snappaste-dev-eks-cluster-ClusterEncryption"
+      + path             = "/"
+      + policy           = (known after apply)
+      + policy_id        = (known after apply)
+      + tags             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all         = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.eks.aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = [
+                          + "sts:TagSession",
+                          + "sts:AssumeRole",
+                        ]
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                      + Sid       = "EKSClusterAssumeRole"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "snappaste-dev-eks-cluster-"
+      + path                  = "/"
+      + tags                  = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.eks.module.eks.aws_iam_role_policy_attachment.cluster_encryption[0] will be created
+  + resource "aws_iam_role_policy_attachment" "cluster_encryption" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_security_group.cluster[0] will be created
+  + resource "aws_security_group" "cluster" {
+      + arn                    = (known after apply)
+      + description            = "EKS cluster security group"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "snappaste-dev-eks-cluster-"
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-eks-cluster"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-eks-cluster"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_security_group.node[0] will be created
+  + resource "aws_security_group" "node" {
+      + arn                    = (known after apply)
+      + description            = "EKS node shared security group"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "snappaste-dev-eks-node-"
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment"                             = "dev"
+          + "ManagedBy"                               = "terraform"
+          + "Name"                                    = "snappaste-dev-eks-node"
+          + "Project"                                 = "snappaste"
+          + "kubernetes.io/cluster/snappaste-dev-eks" = "owned"
+        }
+      + tags_all               = {
+          + "Environment"                             = "dev"
+          + "ManagedBy"                               = "terraform"
+          + "Name"                                    = "snappaste-dev-eks-node"
+          + "Project"                                 = "snappaste"
+          + "kubernetes.io/cluster/snappaste-dev-eks" = "owned"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.cluster["ingress_nodes_443"] will be created
+  + resource "aws_security_group_rule" "cluster" {
+      + description              = "Node groups to cluster API"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["egress_all"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Allow all egress"
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_10251_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 10251/tcp webhook"
+      + from_port                = 10251
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 10251
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_443"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node groups"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 4443/tcp webhook"
+      + from_port                = 4443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 4443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 6443/tcp webhook"
+      + from_port                = 6443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 6443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 8443/tcp webhook"
+      + from_port                = 8443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 8443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 9443/tcp webhook"
+      + from_port                = 9443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 9443
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node kubelets"
+      + from_port                = 10250
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 10250
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node ingress on ephemeral ports"
+      + from_port                = 1025
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node CoreDNS"
+      + from_port                = 53
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 53
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node CoreDNS UDP"
+      + from_port                = 53
+      + id                       = (known after apply)
+      + protocol                 = "udp"
+      + region                   = "us-east-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 53
+      + type                     = "ingress"
+    }
+
+  # module.eks.module.eks.time_sleep.this[0] will be created
+  + resource "time_sleep" "this" {
+      + create_duration = "30s"
+      + id              = (known after apply)
+      + triggers        = {
+          + "certificate_authority_data" = (known after apply)
+          + "endpoint"                   = (known after apply)
+          + "kubernetes_version"         = "1.34"
+          + "name"                       = (known after apply)
+          + "service_cidr"               = (known after apply)
+        }
+    }
+
+  # module.eks.module.lb_controller_pod_identity.aws_eks_pod_identity_association.this["this"] will be created
+  + resource "aws_eks_pod_identity_association" "this" {
+      + association_arn      = (known after apply)
+      + association_id       = (known after apply)
+      + cluster_name         = "snappaste-dev-eks"
+      + disable_session_tags = false
+      + external_id          = (known after apply)
+      + id                   = (known after apply)
+      + namespace            = "kube-system"
+      + region               = "us-east-1"
+      + role_arn             = (known after apply)
+      + service_account      = "aws-load-balancer-controller"
+      + tags                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.lb_controller_pod_identity.aws_iam_policy.lb_controller[0] will be created
+  + resource "aws_iam_policy" "lb_controller" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + description      = "Permissions for AWS Load Balancer Controller"
+      + id               = (known after apply)
+      + name             = (known after apply)
+      + name_prefix      = "AmazonEKS_LoadBalancerController-"
+      + path             = "/"
+      + policy           = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "iam:CreateServiceLinkedRole"
+                      + Condition = {
+                          + StringEquals = {
+                              + "iam:AWSServiceName" = "elasticloadbalancing.amazonaws.com"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:DescribeTrustStores",
+                          + "elasticloadbalancing:DescribeTargetHealth",
+                          + "elasticloadbalancing:DescribeTargetGroups",
+                          + "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          + "elasticloadbalancing:DescribeTags",
+                          + "elasticloadbalancing:DescribeSSLPolicies",
+                          + "elasticloadbalancing:DescribeRules",
+                          + "elasticloadbalancing:DescribeLoadBalancers",
+                          + "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          + "elasticloadbalancing:DescribeListeners",
+                          + "elasticloadbalancing:DescribeListenerCertificates",
+                          + "elasticloadbalancing:DescribeListenerAttributes",
+                          + "elasticloadbalancing:DescribeCapacityReservation",
+                          + "ec2:GetSecurityGroupsForVpc",
+                          + "ec2:GetCoipPoolUsage",
+                          + "ec2:DescribeVpcs",
+                          + "ec2:DescribeVpcPeeringConnections",
+                          + "ec2:DescribeTags",
+                          + "ec2:DescribeSubnets",
+                          + "ec2:DescribeSecurityGroups",
+                          + "ec2:DescribeRouteTables",
+                          + "ec2:DescribeNetworkInterfaces",
+                          + "ec2:DescribeIpamPools",
+                          + "ec2:DescribeInternetGateways",
+                          + "ec2:DescribeInstances",
+                          + "ec2:DescribeCoipPools",
+                          + "ec2:DescribeAvailabilityZones",
+                          + "ec2:DescribeAddresses",
+                          + "ec2:DescribeAccountAttributes",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action   = [
+                          + "wafv2:ListWebACLs",
+                          + "wafv2:GetWebACLForResource",
+                          + "wafv2:GetWebACL",
+                          + "wafv2:DisassociateWebACL",
+                          + "wafv2:AssociateWebACL",
+                          + "waf-regional:GetWebACLForResource",
+                          + "waf-regional:GetWebACL",
+                          + "waf-regional:DisassociateWebACL",
+                          + "waf-regional:AssociateWebACL",
+                          + "shield:GetSubscriptionState",
+                          + "shield:DescribeProtection",
+                          + "shield:DeleteProtection",
+                          + "shield:CreateProtection",
+                          + "iam:ListServerCertificates",
+                          + "iam:GetServerCertificate",
+                          + "cognito-idp:DescribeUserPoolClient",
+                          + "acm:ListCertificates",
+                          + "acm:DescribeCertificate",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action   = [
+                          + "ec2:RevokeSecurityGroupIngress",
+                          + "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action   = "ec2:CreateSecurityGroup"
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action    = "ec2:CreateTags"
+                      + Condition = {
+                          + Null         = {
+                              + "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          + StringEquals = {
+                              + "ec2:CreateAction" = "CreateSecurityGroup"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  + {
+                      + Action    = [
+                          + "ec2:DeleteTags",
+                          + "ec2:CreateTags",
+                        ]
+                      + Condition = {
+                          + Null = {
+                              + "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              + "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  + {
+                      + Action    = [
+                          + "ec2:RevokeSecurityGroupIngress",
+                          + "ec2:DeleteSecurityGroup",
+                          + "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      + Condition = {
+                          + Null = {
+                              + "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = [
+                          + "elasticloadbalancing:CreateTargetGroup",
+                          + "elasticloadbalancing:CreateLoadBalancer",
+                        ]
+                      + Condition = {
+                          + Null = {
+                              + "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:DeleteRule",
+                          + "elasticloadbalancing:DeleteListener",
+                          + "elasticloadbalancing:CreateRule",
+                          + "elasticloadbalancing:CreateListener",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                  + {
+                      + Action    = [
+                          + "elasticloadbalancing:RemoveTags",
+                          + "elasticloadbalancing:AddTags",
+                        ]
+                      + Condition = {
+                          + Null = {
+                              + "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              + "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = [
+                          + "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:RemoveTags",
+                          + "elasticloadbalancing:AddTags",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*",
+                        ]
+                    },
+                  + {
+                      + Action    = [
+                          + "elasticloadbalancing:SetSubnets",
+                          + "elasticloadbalancing:SetSecurityGroups",
+                          + "elasticloadbalancing:SetIpAddressType",
+                          + "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          + "elasticloadbalancing:ModifyTargetGroup",
+                          + "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          + "elasticloadbalancing:ModifyListenerAttributes",
+                          + "elasticloadbalancing:ModifyIpPools",
+                          + "elasticloadbalancing:ModifyCapacityReservation",
+                          + "elasticloadbalancing:DeleteTargetGroup",
+                          + "elasticloadbalancing:DeleteLoadBalancer",
+                        ]
+                      + Condition = {
+                          + Null = {
+                              + "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                    },
+                  + {
+                      + Action    = "elasticloadbalancing:AddTags"
+                      + Condition = {
+                          + Null         = {
+                              + "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          + StringEquals = {
+                              + "elasticloadbalancing:CreateAction" = [
+                                  + "CreateTargetGroup",
+                                  + "CreateLoadBalancer",
+                                ]
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = [
+                          + "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          + "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:RegisterTargets",
+                          + "elasticloadbalancing:DeregisterTargets",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+                    },
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:SetWebAcl",
+                          + "elasticloadbalancing:SetRulePriorities",
+                          + "elasticloadbalancing:RemoveListenerCertificates",
+                          + "elasticloadbalancing:ModifyRule",
+                          + "elasticloadbalancing:ModifyListener",
+                          + "elasticloadbalancing:AddListenerCertificates",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id        = (known after apply)
+      + tags             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all         = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.lb_controller_pod_identity.aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = [
+                          + "sts:TagSession",
+                          + "sts:AssumeRole",
+                        ]
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "pods.eks.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "snappaste-dev-lb-controller-"
+      + path                  = "/"
+      + tags                  = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all              = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.eks.module.lb_controller_pod_identity.aws_iam_role_policy_attachment.lb_controller[0] will be created
+  + resource "aws_iam_role_policy_attachment" "lb_controller" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_default_network_acl.this[0] will be created
+  + resource "aws_default_network_acl" "this" {
+      + arn                    = (known after apply)
+      + default_network_acl_id = (known after apply)
+      + id                     = (known after apply)
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+
+      + egress {
+          + action          = "allow"
+          + from_port       = 0
+          + ipv6_cidr_block = "::/0"
+          + protocol        = "-1"
+          + rule_no         = 101
+          + to_port         = 0
+            # (1 unchanged attribute hidden)
+        }
+      + egress {
+          + action          = "allow"
+          + cidr_block      = "0.0.0.0/0"
+          + from_port       = 0
+          + protocol        = "-1"
+          + rule_no         = 100
+          + to_port         = 0
+            # (1 unchanged attribute hidden)
+        }
+
+      + ingress {
+          + action          = "allow"
+          + from_port       = 0
+          + ipv6_cidr_block = "::/0"
+          + protocol        = "-1"
+          + rule_no         = 101
+          + to_port         = 0
+            # (1 unchanged attribute hidden)
+        }
+      + ingress {
+          + action          = "allow"
+          + cidr_block      = "0.0.0.0/0"
+          + from_port       = 0
+          + protocol        = "-1"
+          + rule_no         = 100
+          + to_port         = 0
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.vpc.module.vpc.aws_default_route_table.default[0] will be created
+  + resource "aws_default_route_table" "default" {
+      + arn                    = (known after apply)
+      + default_route_table_id = (known after apply)
+      + id                     = (known after apply)
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + route                  = (known after apply)
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+          + update = "5m"
+        }
+    }
+
+  # module.vpc.module.vpc.aws_default_security_group.this[0] will be created
+  + resource "aws_default_security_group" "this" {
+      + arn                    = (known after apply)
+      + description            = (known after apply)
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + region                 = "us-east-1"
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + tags_all               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-default"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_eip.nat[0] will be created
+  + resource "aws_eip" "nat" {
+      + allocation_id        = (known after apply)
+      + arn                  = (known after apply)
+      + association_id       = (known after apply)
+      + carrier_ip           = (known after apply)
+      + customer_owned_ip    = (known after apply)
+      + domain               = "vpc"
+      + id                   = (known after apply)
+      + instance             = (known after apply)
+      + ipam_pool_id         = (known after apply)
+      + network_border_group = (known after apply)
+      + network_interface    = (known after apply)
+      + private_dns          = (known after apply)
+      + private_ip           = (known after apply)
+      + ptr_record           = (known after apply)
+      + public_dns           = (known after apply)
+      + public_ip            = (known after apply)
+      + public_ipv4_pool     = (known after apply)
+      + region               = "us-east-1"
+      + tags                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-us-east-1a"
+          + "Project"     = "snappaste"
+        }
+      + tags_all             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-us-east-1a"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.vpc.module.vpc.aws_internet_gateway.this[0] will be created
+  + resource "aws_internet_gateway" "this" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + region   = "us-east-1"
+      + tags     = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc"
+          + "Project"     = "snappaste"
+        }
+      + tags_all = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_nat_gateway.this[0] will be created
+  + resource "aws_nat_gateway" "this" {
+      + allocation_id                      = (known after apply)
+      + association_id                     = (known after apply)
+      + auto_provision_zones               = (known after apply)
+      + auto_scaling_ips                   = (known after apply)
+      + availability_mode                  = (known after apply)
+      + connectivity_type                  = "public"
+      + id                                 = (known after apply)
+      + network_interface_id               = (known after apply)
+      + private_ip                         = (known after apply)
+      + public_ip                          = (known after apply)
+      + region                             = "us-east-1"
+      + regional_nat_gateway_address       = (known after apply)
+      + regional_nat_gateway_auto_mode     = (known after apply)
+      + route_table_id                     = (known after apply)
+      + secondary_allocation_ids           = (known after apply)
+      + secondary_private_ip_address_count = (known after apply)
+      + secondary_private_ip_addresses     = (known after apply)
+      + subnet_id                          = (known after apply)
+      + tags                               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-us-east-1a"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                           = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-us-east-1a"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id                             = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route.private_nat_gateway[0] will be created
+  + resource "aws_route" "private_nat_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + region                 = "us-east-1"
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.module.vpc.aws_route.public_internet_gateway[0] will be created
+  + resource "aws_route" "public_internet_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + region                 = "us-east-1"
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.module.vpc.aws_route_table.private[0] will be created
+  + resource "aws_route_table" "private" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + region           = "us-east-1"
+      + route            = (known after apply)
+      + tags             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-private"
+          + "Project"     = "snappaste"
+        }
+      + tags_all         = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-private"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route_table.public[0] will be created
+  + resource "aws_route_table" "public" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + region           = "us-east-1"
+      + route            = (known after apply)
+      + tags             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-public"
+          + "Project"     = "snappaste"
+        }
+      + tags_all         = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc-public"
+          + "Project"     = "snappaste"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route_table_association.private[0] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + region         = "us-east-1"
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route_table_association.private[1] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + region         = "us-east-1"
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route_table_association.public[0] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + region         = "us-east-1"
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_route_table_association.public[1] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + region         = "us-east-1"
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_subnet.private[0] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.10.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block                                = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + region                                         = "us-east-1"
+      + tags                                           = {
+          + "Environment"                     = "dev"
+          + "ManagedBy"                       = "terraform"
+          + "Name"                            = "snappaste-dev-vpc-private-us-east-1a"
+          + "Project"                         = "snappaste"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Environment"                     = "dev"
+          + "ManagedBy"                       = "terraform"
+          + "Name"                            = "snappaste-dev-vpc-private-us-east-1a"
+          + "Project"                         = "snappaste"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_subnet.private[1] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.20.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block                                = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + region                                         = "us-east-1"
+      + tags                                           = {
+          + "Environment"                     = "dev"
+          + "ManagedBy"                       = "terraform"
+          + "Name"                            = "snappaste-dev-vpc-private-us-east-1b"
+          + "Project"                         = "snappaste"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Environment"                     = "dev"
+          + "ManagedBy"                       = "terraform"
+          + "Name"                            = "snappaste-dev-vpc-private-us-east-1b"
+          + "Project"                         = "snappaste"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_subnet.public[0] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.1.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block                                = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + region                                         = "us-east-1"
+      + tags                                           = {
+          + "Environment"            = "dev"
+          + "ManagedBy"              = "terraform"
+          + "Name"                   = "snappaste-dev-vpc-public-us-east-1a"
+          + "Project"                = "snappaste"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Environment"            = "dev"
+          + "ManagedBy"              = "terraform"
+          + "Name"                   = "snappaste-dev-vpc-public-us-east-1a"
+          + "Project"                = "snappaste"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_subnet.public[1] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.2.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block                                = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + region                                         = "us-east-1"
+      + tags                                           = {
+          + "Environment"            = "dev"
+          + "ManagedBy"              = "terraform"
+          + "Name"                   = "snappaste-dev-vpc-public-us-east-1b"
+          + "Project"                = "snappaste"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Environment"            = "dev"
+          + "ManagedBy"              = "terraform"
+          + "Name"                   = "snappaste-dev-vpc-public-us-east-1b"
+          + "Project"                = "snappaste"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.module.vpc.aws_vpc.this[0] will be created
+  + resource "aws_vpc" "this" {
+      + arn                                  = (known after apply)
+      + cidr_block                           = "10.0.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + enable_network_address_usage_metrics = (known after apply)
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + region                               = "us-east-1"
+      + tags                                 = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                             = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Name"        = "snappaste-dev-vpc"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_eks_node_group.this[0] will be created
+  + resource "aws_eks_node_group" "this" {
+      + ami_type               = "AL2023_x86_64_STANDARD"
+      + arn                    = (known after apply)
+      + capacity_type          = "SPOT"
+      + cluster_name           = (known after apply)
+      + disk_size              = (known after apply)
+      + id                     = (known after apply)
+      + instance_types         = [
+          + "t3.medium",
+        ]
+      + labels                 = {
+          + "Environment" = "dev"
+          + "Project"     = "snappaste"
+        }
+      + node_group_name        = (known after apply)
+      + node_group_name_prefix = "general-"
+      + node_role_arn          = (known after apply)
+      + region                 = "us-east-1"
+      + release_version        = "1.34.4-20260304"
+      + resources              = (known after apply)
+      + status                 = (known after apply)
+      + subnet_ids             = (known after apply)
+      + tags                   = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Name"                                        = "general"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + tags_all               = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Name"                                        = "general"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + version                = "1.34"
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = (known after apply)
+        }
+
+      + node_repair_config (known after apply)
+
+      + scaling_config {
+          + desired_size = 2
+          + max_size     = 3
+          + min_size     = 1
+        }
+
+      + update_config {
+          + max_unavailable_percentage = 33
+        }
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                      + Sid       = "EKSNodeAssumeRole"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + description           = "EKS managed node group IAM role"
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "general-eks-node-group-"
+      + path                  = "/"
+      + tags                  = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + tags_all              = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].aws_launch_template.this[0] will be created
+  + resource "aws_launch_template" "this" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + description            = "Custom launch template for general EKS managed node group"
+      + id                     = (known after apply)
+      + latest_version         = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "general-"
+      + region                 = "us-east-1"
+      + tags                   = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + tags_all               = {
+          + "Environment"                                 = "dev"
+          + "ManagedBy"                                   = "terraform"
+          + "Project"                                     = "snappaste"
+          + "k8s.io/cluster-autoscaler/enabled"           = "true"
+          + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+        }
+      + update_default_version = true
+      + vpc_security_group_ids = (known after apply)
+        # (2 unchanged attributes hidden)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = (known after apply)
+          + http_put_response_hop_limit = 1
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = (known after apply)
+        }
+
+      + tag_specifications {
+          + resource_type = "instance"
+          + tags          = {
+              + "Environment"                                 = "dev"
+              + "ManagedBy"                                   = "terraform"
+              + "Name"                                        = "general"
+              + "Project"                                     = "snappaste"
+              + "k8s.io/cluster-autoscaler/enabled"           = "true"
+              + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+            }
+        }
+      + tag_specifications {
+          + resource_type = "network-interface"
+          + tags          = {
+              + "Environment"                                 = "dev"
+              + "ManagedBy"                                   = "terraform"
+              + "Name"                                        = "general"
+              + "Project"                                     = "snappaste"
+              + "k8s.io/cluster-autoscaler/enabled"           = "true"
+              + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+            }
+        }
+      + tag_specifications {
+          + resource_type = "volume"
+          + tags          = {
+              + "Environment"                                 = "dev"
+              + "ManagedBy"                                   = "terraform"
+              + "Name"                                        = "general"
+              + "Project"                                     = "snappaste"
+              + "k8s.io/cluster-autoscaler/enabled"           = "true"
+              + "k8s.io/cluster-autoscaler/snappaste-dev-eks" = "owned"
+            }
+        }
+    }
+
+  # module.eks.module.eks.module.kms.data.aws_iam_policy_document.this[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "this" {
+      + id                        = (known after apply)
+      + json                      = (known after apply)
+      + minified_json             = (known after apply)
+      + override_policy_documents = []
+      + source_policy_documents   = []
+
+      + statement {
+          + actions   = [
+              + "kms:*",
+            ]
+          + resources = [
+              + "*",
+            ]
+          + sid       = "Default"
+
+          + principals {
+              + identifiers = [
+                  + "arn:aws:iam::884337374668:root",
+                ]
+              + type        = "AWS"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "kms:CancelKeyDeletion",
+              + "kms:Create*",
+              + "kms:Delete*",
+              + "kms:Describe*",
+              + "kms:Disable*",
+              + "kms:Enable*",
+              + "kms:Get*",
+              + "kms:ImportKeyMaterial",
+              + "kms:List*",
+              + "kms:Put*",
+              + "kms:ReplicateKey",
+              + "kms:Revoke*",
+              + "kms:ScheduleKeyDeletion",
+              + "kms:TagResource",
+              + "kms:UntagResource",
+              + "kms:Update*",
+            ]
+          + resources = [
+              + "*",
+            ]
+          + sid       = "KeyAdministration"
+
+          + principals {
+              + identifiers = [
+                  + "arn:aws:iam::884337374668:user/siva",
+                ]
+              + type        = "AWS"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "kms:Decrypt",
+              + "kms:DescribeKey",
+              + "kms:Encrypt",
+              + "kms:GenerateDataKey*",
+              + "kms:ReEncrypt*",
+            ]
+          + resources = [
+              + "*",
+            ]
+          + sid       = "KeyUsage"
+
+          + principals {
+              + identifiers = [
+                  + (known after apply),
+                ]
+              + type        = "AWS"
+            }
+        }
+    }
+
+  # module.eks.module.eks.module.kms.aws_kms_alias.this["cluster"] will be created
+  + resource "aws_kms_alias" "this" {
+      + arn            = (known after apply)
+      + id             = (known after apply)
+      + name           = "alias/eks/snappaste-dev-eks"
+      + name_prefix    = (known after apply)
+      + region         = "us-east-1"
+      + target_key_arn = (known after apply)
+      + target_key_id  = (known after apply)
+    }
+
+  # module.eks.module.eks.module.kms.aws_kms_key.this[0] will be created
+  + resource "aws_kms_key" "this" {
+      + arn                                = (known after apply)
+      + bypass_policy_lockout_safety_check = false
+      + customer_master_key_spec           = "SYMMETRIC_DEFAULT"
+      + description                        = "snappaste-dev-eks cluster encryption key"
+      + enable_key_rotation                = true
+      + id                                 = (known after apply)
+      + is_enabled                         = true
+      + key_id                             = (known after apply)
+      + key_usage                          = "ENCRYPT_DECRYPT"
+      + multi_region                       = false
+      + policy                             = (known after apply)
+      + region                             = "us-east-1"
+      + rotation_period_in_days            = (known after apply)
+      + tags                               = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+      + tags_all                           = {
+          + "Environment" = "dev"
+          + "ManagedBy"   = "terraform"
+          + "Project"     = "snappaste"
+        }
+    }
+
+  # module.eks.module.eks.module.eks_managed_node_group["general"].module.user_data.null_resource.validate_cluster_service_cidr will be created
+  + resource "null_resource" "validate_cluster_service_cidr" {
+      + id = (known after apply)
+    }
+
+Plan: 90 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + configure_kubectl          = "aws eks update-kubeconfig --region us-east-1 --name snappaste-dev-eks"
+  + ecr_repository_urls        = {
+      + backend  = (known after apply)
+      + frontend = (known after apply)
+    }
+  + eks_cluster_endpoint       = (known after apply)
+  + eks_cluster_name           = "snappaste-dev-eks"
+  + eks_cluster_version        = "1.34"
+  + eks_lb_controller_role_arn = (known after apply)
+  + jumpbox_instance_id        = (known after apply)
+  + private_subnet_ids         = [
+      + (known after apply),
+      + (known after apply),
+    ]
+  + public_subnet_ids          = [
+      + (known after apply),
+      + (known after apply),
+    ]
+  + vpc_id                     = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "tfplan"
+Releasing state lock. This may take a few moments...

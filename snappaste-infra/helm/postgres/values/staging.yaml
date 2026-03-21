@@ -1,0 +1,25 @@
+global:
+  environment: staging
+  namespace: snappaste
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+  pullPolicy: IfNotPresent
+
+auth:
+  database: snappaste
+  username: snappaste
+  password: snappaste
+
+storage:
+  size: 10Gi
+  storageClass: ""
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi

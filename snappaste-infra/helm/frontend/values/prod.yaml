@@ -1,0 +1,25 @@
+global:
+  environment: prod
+  namespace: snappaste
+
+image:
+  repository: ""   # set by pipeline
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 2
+
+port: 80
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+ingress:
+  enabled: true
+  className: alb
+  host: "snappaste.com"

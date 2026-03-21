@@ -37,6 +37,6 @@ jumpbox_instance_type = "t3.micro"
 # ──────────────────────────────────────────────
 runner_instance_type = "t3.medium"
 runner_volume_size   = 30
-github_runner_url    = "https://github.com/siva9800/DevOps-end-to-end"
+github_runner_url    = "https://github.com/siva9800/DevOps-end-to-end-project"
 
-# export TF_VAR_github_runner_token="$(gh api --method POST /repos/siva9800/DevOps-end-to-end/actions/runners/registration-token --jq '.token')"
+# export TF_VAR_github_runner_token="$(gh api --method POST /repos/siva9800/DevOps-end-to-end-project/actions/runners/registration-token --jq '.token')"

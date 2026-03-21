@@ -1,0 +1,25 @@
+global:
+  environment: prod
+  namespace: snappaste
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+  pullPolicy: IfNotPresent
+
+auth:
+  database: snappaste
+  username: snappaste
+  password: snappaste
+
+storage:
+  size: 20Gi
+  storageClass: gp3
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
