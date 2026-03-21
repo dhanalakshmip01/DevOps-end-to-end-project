@@ -51,9 +51,10 @@ jobs:
         working-directory: snappaste-frontend
         run: npx tsc --noEmit
 
-      - name: Run Tests
-        working-directory: snappaste-frontend
-        run: npm run test
+      # - name: Run Tests
+      #   working-directory: snappaste-frontend
+      #   run: npm run test
+      #   # TODO: add test files to snappaste-frontend/src
 
   # ──────────────────────────────────────────────
   # SonarQube — static code analysis (disabled for now)
