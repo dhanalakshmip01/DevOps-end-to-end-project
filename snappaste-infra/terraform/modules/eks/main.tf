@@ -42,9 +42,10 @@ module "eks" {
   # Managed node groups
   eks_managed_node_groups = {
     general = {
-      ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = var.node_instance_types
-      capacity_type  = var.environment == "prod" ? "ON_DEMAND" : "SPOT"
+      ami_type           = "AL2023_x86_64_STANDARD"
+      instance_types     = var.node_instance_types
+      capacity_type      = var.environment == "prod" ? "ON_DEMAND" : "SPOT"
+      kubernetes_version = var.kubernetes_version
 
       min_size     = var.node_min_size
       max_size     = var.node_max_size
