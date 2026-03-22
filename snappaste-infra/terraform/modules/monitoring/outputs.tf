@@ -10,10 +10,10 @@ output "loki_bucket_name" {
 
 output "mimir_role_arn" {
   description = "IAM role ARN for Mimir Pod Identity"
-  value       = module.mimir_pod_identity.iam_role_arn
+  value       = aws_iam_role.mimir.arn
 }
 
 output "loki_role_arn" {
   description = "IAM role ARN for Loki Pod Identity"
-  value       = module.loki_pod_identity.iam_role_arn
+  value       = aws_iam_role.loki.arn
 }

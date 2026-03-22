@@ -138,49 +138,59 @@ resource "aws_iam_policy" "loki_s3" {
 
 # ──────────────────────────────────────────────
 # Pod Identity — Mimir
-# Same pattern as ebs-csi and lb-controller in modules/eks/main.tf
+# Using raw AWS resources (no module) for custom policy support
 # ──────────────────────────────────────────────
-module "mimir_pod_identity" {
-  source  = "terraform-aws-modules/eks-pod-identity/aws"
-  version = "2.7.0"
 
-  name = "${var.project_name}-${var.environment}-mimir"
+# Trust policy that allows EKS Pod Identity to assume these roles
+locals {
+  pod_identity_trust_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "pods.eks.amazonaws.com"
+      }
+      Action = ["sts:AssumeRole", "sts:TagSession"]
+    }]
+  })
+}
 
-  additional_iam_policies = {
-    mimir_s3 = aws_iam_policy.mimir_s3.arn
-  }
+resource "aws_iam_role" "mimir" {
+  name               = "${var.project_name}-${var.environment}-mimir"
+  assume_role_policy = local.pod_identity_trust_policy
+  tags               = var.common_tags
+}
 
-  associations = {
-    this = {
-      cluster_name    = var.eks_cluster_name
-      namespace       = "monitoring"
-      service_account = "mimir"
-    }
-  }
+resource "aws_iam_role_policy_attachment" "mimir_s3" {
+  role       = aws_iam_role.mimir.name
+  policy_arn = aws_iam_policy.mimir_s3.arn
+}
 
-  tags = var.common_tags
+resource "aws_eks_pod_identity_association" "mimir" {
+  cluster_name    = var.eks_cluster_name
+  namespace       = "monitoring"
+  service_account = "mimir"
+  role_arn        = aws_iam_role.mimir.arn
 }
 
 # ──────────────────────────────────────────────
 # Pod Identity — Loki
 # ──────────────────────────────────────────────
-module "loki_pod_identity" {
-  source  = "terraform-aws-modules/eks-pod-identity/aws"
-  version = "2.7.0"
 
-  name = "${var.project_name}-${var.environment}-loki"
+resource "aws_iam_role" "loki" {
+  name               = "${var.project_name}-${var.environment}-loki"
+  assume_role_policy = local.pod_identity_trust_policy
+  tags               = var.common_tags
+}
 
-  additional_iam_policies = {
-    loki_s3 = aws_iam_policy.loki_s3.arn
-  }
+resource "aws_iam_role_policy_attachment" "loki_s3" {
+  role       = aws_iam_role.loki.name
+  policy_arn = aws_iam_policy.loki_s3.arn
+}
 
-  associations = {
-    this = {
-      cluster_name    = var.eks_cluster_name
-      namespace       = "monitoring"
-      service_account = "loki"
-    }
-  }
-
-  tags = var.common_tags
+resource "aws_eks_pod_identity_association" "loki" {
+  cluster_name    = var.eks_cluster_name
+  namespace       = "monitoring"
+  service_account = "loki"
+  role_arn        = aws_iam_role.loki.arn
 }
